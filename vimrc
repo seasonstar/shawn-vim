@@ -74,7 +74,7 @@ vmap <s-tab> <gv
 " strip all trailing whitespace in the current file
 nnoremap <leader>w :%s/\s\+$//<cr>:let @/=''<CR>
 " reselect the text that was just pasted
-nnoremap <leader>V V`]
+nnoremap <leader>V <C-w>V
 " 水平分割窗口
 nnoremap <leader>s <C-w>s
 " 垂直分割窗口
@@ -165,10 +165,15 @@ let NERDTreeIgnore=['.git$', '.nyc_output', '.DS_Store', '\.pyc', '\.pyo', '\.sw
 let NERDTreeShowHidden=1
 
 " syntastic 设置
-" configure syntastic syntax checking to check on open as well as save
-set statusline+=%#warningmsg#
+" [buffer number] followed by filename:
+set statusline=[%n]\ %f
+" for Syntastic messages:
+set statusline+=\ %#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+" show line#:column# on the right hand side
+set statusline+=%=%l:%c
+
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open=1
@@ -176,9 +181,10 @@ let g:syntastic_check_on_wq = 0
 
 let g:syntastic_ignore_files=[".*\.html$"]
 let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_scss_sass_quiet_messages = {
-    \ "regex": 'File to import not found or unreadable', }
-"let g:syntastic_scss_checkers=['']
+
+"let g:syntastic_scss_sass_quiet_messages = {
+"    \ "regex": 'File to import not found or unreadable', }
+let g:syntastic_scss_checkers=['']
 let g:syntastic_javascript_eslint_exec = 'eslint_d'
 "let g:syntastic_html_tidy_ignore_errors = [" proprietary attribute",
 "    \  'plain text isn''t allowed in <head> elements',
